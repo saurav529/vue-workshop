@@ -5,14 +5,28 @@
         <h4 class="title">Register to create a new account</h4>
       </div>
       <div class="content">
-        <form>
+        <form @submit.prevent="submitForm">
           <div class="form-group">
             <label class="label" for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="name" required />
+            <input
+              v-model="name"
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="name"
+              required
+            />
           </div>
           <div class="form-group">
             <label class="label" for="email">Email address</label>
-            <input type="email" class="form-control" id="email" placeholder="email" required />
+            <input
+              v-model="email"
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="email"
+              required
+            />
           </div>
           <div class="form-group">
             <label class="label" for="password">Password</label>
@@ -21,6 +35,7 @@
               class="form-control"
               id="password"
               placeholder="password"
+              v-model="password"
               required
             />
           </div>
@@ -33,8 +48,49 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: "RegistrationForm"
+  name: "RegistrationForm",
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      // formData: [
+      //   {
+      //     name: "",
+      //     email: "",
+      //     password: ""
+      //   }
+      // ]
+    };
+  },
+  methods: {
+    async submitForm() {
+      // this.formData.name = this.name;
+      // this.formData.email = this.email;
+      // this.formData.password = this.password;
+
+      // console.log(this.formData);
+      // let datas = this.formData;
+
+      // console.log(datas);
+
+      try {
+        const response = await axios.post(
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            name: this.name,
+            email: this.email,
+            password: this.password
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 };
 </script>
 
